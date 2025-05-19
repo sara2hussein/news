@@ -34,7 +34,7 @@ class ApiManager {
       var response = await http.get(url);
       var responseBody = response.body;
       var json = jsonDecode(responseBody);
-      NewsResponse.fromJson(json);
+    return  NewsResponse.fromJson(json);
     } catch (e) {
       throw e;
     }

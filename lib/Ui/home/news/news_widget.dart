@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:news/Ui/home/news/news_item.dart';
 import 'package:news/api/api_manager.dart';
 import 'package:news/models/NewsResponse.dart';
 import 'package:news/models/SourceResponse.dart';
 import 'package:news/utils/app_colors.dart';
 import 'package:news/utils/app_styles.dart';
 
-class NewsWidget extends StatelessWidget {
+class NewsWidget extends StatefulWidget {
   Sources source;
   NewsWidget({required this.source});
+
+  @override
+  State<NewsWidget> createState() => _NewsWidgetState();
+}
+
+class _NewsWidgetState extends State<NewsWidget> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<NewsResponse?>(
-      future: ApiManager.getNewsBySourceId(source.id ?? ''),
+      future: ApiManager.getNewsBySourceId(widget.source.id ?? ''),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const Center(
@@ -23,10 +30,13 @@ class NewsWidget extends StatelessWidget {
               Text('Something went Wrong', style: AppStyles.meduim20Black),
               ElevatedButton(
                 onPressed: () {
-                  ApiManager.getNewsBySourceId(source.id ?? '');
-                  //setState(() {});
+                  ApiManager.getNewsBySourceId(widget.source.id ?? '');
+                  setState(() {});
                 },
-                child: Text('Try Again', style: AppStyles.meduim20Black),
+                child: Text(
+                  'Try Again',
+                  style: Theme.of(context).textTheme.headlineLarge,
+                ),
               ),
             ],
           );
@@ -34,17 +44,27 @@ class NewsWidget extends StatelessWidget {
         if (snapshot.data?.status != 'ok') {
           return Column(
             children: [
-              Text(snapshot.data!.message!, style: AppStyles.meduim20Black),
+              Text(
+                snapshot.data!.message!,
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
               ElevatedButton(
                 onPressed: () {
-                  ApiManager.getNewsBySourceId(source.id ?? '');
-                  //setState(() {});
+                  ApiManager.getNewsBySourceId(widget.source.id ?? '');
+                  setState(() {});
                 },
                 child: Text('Try Again', style: AppStyles.meduim20Black),
               ),
             ],
           );
         }
+        var newsList = snapshot.data?.articlesList ?? [];
+        return ListView.builder(
+          itemBuilder: (context, index) {
+            return NewsItem(news: newsList[index],);
+          },
+          itemCount: newsList.length,
+        );
       },
     );
   }

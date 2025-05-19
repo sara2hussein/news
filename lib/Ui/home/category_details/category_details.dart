@@ -33,7 +33,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
                     
                   });
                 },
-                child: Text('Try Again', style: AppStyles.meduim20Black),
+                child: Text('Try Again', style: Theme.of(context).textTheme.headlineLarge),
               ),
             ],
           );
@@ -42,7 +42,7 @@ class _CategoryDetailsState extends State<CategoryDetails> {
         if (snapshot.data?.status != 'ok') {
           return Column(
             children: [
-              Text(snapshot.data!.message!, style: AppStyles.meduim20Black),
+              Text(snapshot.data!.message!, style: Theme.of(context).textTheme.headlineLarge),
               ElevatedButton(
                 onPressed: () {
                   ApiManager.getSources();
