@@ -2,6 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news/models/NewsResponse.dart';
 import 'package:news/utils/app_colors.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 
 class NewsItem extends StatelessWidget {
   News news;
@@ -49,9 +51,9 @@ class NewsItem extends StatelessWidget {
                 ),
               ),
               Text(
-                news.publishedAt ?? '',
-                style: Theme.of(context).textTheme.labelSmall,
-              ),
+  timeago.format(DateTime.tryParse(news.publishedAt ?? '') ?? DateTime.now()),
+  style: Theme.of(context).textTheme.labelSmall,
+),
             ],
           ),
         ],
