@@ -8,6 +8,8 @@ import 'package:news/utils/assets_manager.dart';
 import 'package:provider/provider.dart';
 
 class HomeDrawer extends StatelessWidget {
+  Function onDrawerMenuClick;
+  HomeDrawer({required this.onDrawerMenuClick});
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -40,6 +42,7 @@ class HomeDrawer extends StatelessWidget {
                     child: Text('Go To Home', style: AppStyles.bold20White),
                     onPressed: () {
                       //func go home
+                      onDrawerMenuClick();
                     },
                   ),
                 ],

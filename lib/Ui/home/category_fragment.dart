@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 
 class CategoryFragment extends StatelessWidget {
   List<Category> categoriesList = [];
+  Function onButtonClick;
+  CategoryFragment({required this.onButtonClick});
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -68,6 +70,7 @@ class CategoryFragment extends StatelessWidget {
                               child: IconButton(
                                 onPressed: () {
                                   //function
+                                  onButtonClick(categoriesList[index]);
                                 },
                                 icon: Icon(
                                   Icons.arrow_forward_ios_outlined,

@@ -5,8 +5,11 @@ import 'package:news/utils/app_colors.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class NewsItem extends StatelessWidget {
-  News news;
-  NewsItem({required this.news});
+  final News news;
+  final VoidCallback onTap;
+
+  NewsItem({required this.news, required this.onTap});
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -26,21 +29,22 @@ class NewsItem extends StatelessWidget {
       ),
       child: Column(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8),
-            child: CachedNetworkImage(
-              imageUrl: news.urlToImage ?? '',
-              placeholder:
-                  (context, url) => const CircularProgressIndicator(
-                    color: AppColors.greyColor,
-                  ),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
+          GestureDetector(
+            onTap: onTap,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: CachedNetworkImage(
+                imageUrl: news.urlToImage ?? '',
+                placeholder: (context, url) => const CircularProgressIndicator(
+                  color: AppColors.greyColor,
+                ),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ),
             ),
           ),
           SizedBox(height: height * 0.02),
           Text(news.title ?? '', style: Theme.of(context).textTheme.labelLarge),
           SizedBox(height: height * 0.02),
-
           Row(
             children: [
               Expanded(

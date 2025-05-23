@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:news/Ui/home/news/news_widget.dart';
 import 'package:news/Ui/home/category_details/sourse_tap_name.dart';
 import 'package:news/models/SourceResponse.dart';
-import 'package:news/utils/app_colors.dart';
-import 'package:news/utils/app_theme.dart';
+import 'package:news/Ui/home/news/news_widget.dart';
 
 class SourceTapWidget extends StatefulWidget {
-  List<Sources> sourcesList;
+  final List<Sources> sourcesList;
+  final bool isSearchVisible;
 
-  SourceTapWidget({required this.sourcesList});
+  SourceTapWidget({required this.sourcesList, required this.isSearchVisible});
 
   @override
   State<SourceTapWidget> createState() => _SourceTapWidgetState();
@@ -21,28 +20,40 @@ class _SourceTapWidgetState extends State<SourceTapWidget> {
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: widget.sourcesList.length,
+      initialIndex: selectedIndex,
       child: Column(
         children: [
           TabBar(
             isScrollable: true,
             tabAlignment: TabAlignment.start,
-            indicatorColor: Theme.of(context).indicatorColor,
-            dividerColor: AppColors.transparentColor,
             onTap: (index) {
-              selectedIndex = index;
-              setState(() {});
+              setState(() {
+                selectedIndex = index;
+              });
             },
             tabs:
-                widget.sourcesList.map((source) {
-                  return SourseTapName(
-                    source: source,
-                    isSelected:
-                        selectedIndex == widget.sourcesList.indexOf(source),
+                widget.sourcesList.asMap().entries.map((entry) {
+                  int idx = entry.key;
+                  Sources source = entry.value;
+                  return Tab(
+                    child: SourseTapName(
+                      source: source,
+                      isSelected: idx == selectedIndex,
+                    ),
                   );
                 }).toList(),
           ),
-          
-        Expanded(child: NewsWidget(source: widget.sourcesList[selectedIndex])),
+          Expanded(
+            child: TabBarView(
+              children:
+                  widget.sourcesList.map((source) {
+                    return NewsWidget(
+                      source: source,
+                      isSearchVisible: widget.isSearchVisible,
+                    );
+                  }).toList(),
+            ),
+          ),
         ],
       ),
     );

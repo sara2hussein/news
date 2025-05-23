@@ -4,10 +4,10 @@ import 'package:news/provider/theme_provider.dart';
 import 'package:news/utils/app_theme.dart';
 import 'package:provider/provider.dart';
 
-
 void main() {
-  runApp(ChangeNotifierProvider( create: (_) => ThemeProvider(),
-      child: MyApp(),));
+  runApp(
+    ChangeNotifierProvider(create: (_) => ThemeProvider(), child: MyApp()),
+  );
 }
 
 class MyApp extends StatelessWidget {
