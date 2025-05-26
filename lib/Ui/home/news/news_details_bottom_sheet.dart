@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news/Ui/widget/view_article.dart';
 import 'package:news/models/NewsResponse.dart';
 
 class NewsDetailsBottomSheet extends StatefulWidget {
@@ -112,6 +113,11 @@ class _NewsDetailsBottomSheetState extends State<NewsDetailsBottomSheet> {
                 child: ElevatedButton(
                   onPressed: () {
                     // TODO: Open full article in browser
+                    Navigator.pushNamed(
+                      context,
+                      ViewArticle.routeName,
+                      arguments: widget.news.url,
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Theme.of(context).primaryColor,

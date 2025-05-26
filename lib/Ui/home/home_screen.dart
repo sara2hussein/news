@@ -25,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
           style: Theme.of(context).textTheme.headlineLarge,
         ),
         actions: [
-          IconButton(
+          IconButton( 
             icon: Icon(Icons.search),
             onPressed: () {
               if (selectedCategory != null) {

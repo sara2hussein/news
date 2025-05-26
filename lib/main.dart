@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:news/Ui/home/home_screen.dart';
+import 'package:news/Ui/widget/view_article.dart';
 import 'package:news/provider/theme_provider.dart';
 import 'package:news/utils/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +20,13 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: HomeScreen.routeName,
-      routes: {HomeScreen.routeName: (context) => HomeScreen()},
+      routes: {
+        HomeScreen.routeName: (context) => HomeScreen(),
+        ViewArticle.routeName: (context) {
+          final args = ModalRoute.of(context)!.settings.arguments as String;
+          return ViewArticle(articleUrl: args);
+        },
+      },
       theme: AppTheme.lighTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: themeProvider.currentTheme,
